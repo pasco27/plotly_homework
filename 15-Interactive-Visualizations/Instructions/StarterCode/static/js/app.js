@@ -34,14 +34,20 @@ function buildPlot() {
 
 
         // from line 28, once the sample_ID is known, the OTU_ID's can be sorted
-        var OTU_ID = data.samples.otu_id ...
+        var OTU_ID_sorted = data.samples.otu_id ...
 
 
 
-        // obtain the top 10 samples by value
+    // obtain the top 10 samples by value
+    function topIDs(OTU_ID_sorted) {
+        return OTU_ID_sorted[''] > // some slice that is top 10 [0:9] of the sorted list from above? 
+            // need to slice here
+        }
+        //OR 
         var sample_values = data.sample.sample_value ...
-
-
+    //OR 
+    var sample_values = OTU_ID_sorted.map(sample => samples.sample_value > //some top slice [0:9] that gets me top 10?)
+        Math.floor ? ceiling ?
 
     // setup trace for plotting (keep in mind, vertical bar chart)
     var trace1 = {
@@ -65,7 +71,7 @@ function buildPlot() {
 
 
     // plot the bar chart with plot.ly
-    Plotly.newPlot("plot", data, layout);
+    Plotly.newPlot("bar-plot", data, layout);
 
 
     // to create the table: the metadata needs to be called for each 
@@ -88,3 +94,11 @@ function buildPlot() {
 
 
 buildPlot();
+
+
+
+
+
+d3.json("../samples.json").then(function (data) {
+    var metadata_ID = data.metadata.[''].id
+
