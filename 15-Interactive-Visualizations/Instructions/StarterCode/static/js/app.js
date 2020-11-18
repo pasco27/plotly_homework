@@ -38,8 +38,6 @@ function buildPlot(selectedID) {
         // pull in and parse data: looks like there are 153 ID's, each with the own list of OTU_ID's 
         // want to grab the sample ID, that will eventually be selected from dropdown
 
-        // var sample_ID = "940"
-
 
         // something that I'm able to select later via dropdown selection (listener?)
         // within the html this is the 'selDataset'
@@ -54,7 +52,20 @@ function buildPlot(selectedID) {
         //var OTU_ID_sorted = data.samples.otu_id ...
 
 
-        // plotly stuff here ...
+        var data = [
+            {
+                y: sample.otu_ids.map(d => d.toString()).slice(0, 9),
+                x: sample.sample_values.slice(0.9),
+                type: 'bar',
+                orientation: 'h'
+            }
+        ];
+
+        var layout =
+
+            Plotly.newPlot("bar-plot", data, layout);
+
+
 
     })
 }
