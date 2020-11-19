@@ -94,28 +94,31 @@ function buildPlot(selectedID) {
         var bubble_data = {
 
             // x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
-            x: top_otu_labels,
-            y: sample.sample_values.slice(0, 10),
-            mode: 'markers',
+            x: sample.otu_ids,
+            y: sample.sample_values,  // <-- removing the slice
+            mode: "markers",
             marker: {
                 // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
                 // opacity: [1, 0.8, 0.6, 0.4],
-                size: sample.sample_values.slice(0, 10)
+                size: sample.sample_values
 
             }
         };
 
-        var layout_gauge = {
-            title: "Marker Size and Color",
+        var layout_bubble = {
+            title: "Bubble Shit",
             showlegend: false,
             height: 600,
-            width: 600
+            width: 800
         };
 
-        Plotly.newPlot("bubble", bubble_data, layout_gauge);
+        Plotly.newPlot("bubble", bubble_data, layout_bubble);
 
     })
 }
+// I'm not getting my bubble plot to work correctly --  I feel that this may be because
+// I may possibly have to create it's own function
+
 
 
 function buildTable(selectedID) {
@@ -167,12 +170,12 @@ function buildGauge(selectedID) {
             {
                 type: "indicator",
                 mode: "gauge+number+delta",
-                value: wash_freq,
+                value: wash_freq_proc.wfreq,
                 title: { text: "Scrubs per Week", font: { size: 18 } },
                 // delta: { reference: 400, increasing: { color: "RebeccaPurple" } },
                 gauge: {
                     axis: { range: [null, 10], tickwidth: 1, tickcolor: "darkblue" },
-                    bar: { color: "darkblue" },
+                    bar: { color: "red" },
                     bgcolor: "white",
                     borderwidth: 2,
                     bordercolor: "gray",
