@@ -1,3 +1,7 @@
+
+github pages link: https://pasco27.github.io/plotly_homework/
+
+
 # Plot.ly Homework - Belly Button Biodiversity
 
 ![Bacteria by filterforge.com](Images/bacteria.jpg)
