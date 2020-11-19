@@ -60,11 +60,16 @@ function buildPlot(selectedID) {
         // var otu_ids_all = sample[0].otu_ids;
         // var values = sample[0].sample_values;
 
+        // the below chart is not pulling the OTU_IDs correctly: 
+        // it's showing the 10 OTU_ID's pulled in a long range of the values.
+        // instead trying: 
+        // var labels = data.sample
+
         // Example 15-3-5 shows that I need to reverse() these slices due to plot.loy defaults
         // It doesn't seem that I do, but I'm keeping this note in the instance that I need to in the future
 
 
-        var data = [
+        var chart_data = [
             {
                 y: sample.otu_ids.map(d => d.toString()).slice(0, 9),
                 x: sample.sample_values.slice(0, 9),
@@ -73,13 +78,36 @@ function buildPlot(selectedID) {
             }
         ];
 
-        var layout = {
+        var layout_chart = {
             title: "The Top 10 OTU's",
             xaxis: { title: "Count" },
             yaxis: { title: "OTU ID" }
         };
 
-        Plotly.newPlot("bar-plot", data, layout);
+        Plotly.newPlot("bar-plot", chart_data, layout_chart);
+
+
+
+        // to display similar data utilizing the bubble chart format: 
+        var bubble_data = {
+            x: [1, 2, 3, 4],
+            y: [10, 11, 12, 13],
+            mode: 'markers',
+            marker: {
+                color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                opacity: [1, 0.8, 0.6, 0.4],
+                size: [40, 60, 80, 100]
+            }
+        };
+
+        var layout_gauge = {
+            title: 'Marker Size and Color',
+            showlegend: false,
+            height: 600,
+            width: 600
+        };
+
+        Plotly.newPlot("bubble", bubble_data, layout_gauge);
 
     })
 }
@@ -132,8 +160,8 @@ function buildGauge(selectedID) {
         var gauge = [
             {
                 domain: { x: [0, 1], y: [0, 1] },
-                value: 270,
-                title: { text: "Speed" },
+                value: wash_freq,
+                title: { text: "Washing Frequency per Week" },
                 type: "indicator",
                 mode: "gauge+number"
             }
@@ -141,7 +169,7 @@ function buildGauge(selectedID) {
 
         var layout_gauge = { width: 600, height: 500, margin: { t: 0, b: 0 } };
 
-        Plotly.newPlot('myDiv', gauge, layout_gauge);
+        Plotly.newPlot("gauge", gauge, layout_gauge);
 
 
 
