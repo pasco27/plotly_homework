@@ -6,10 +6,13 @@
 // 15-2-7 as example:
 // anytime a new sample is selected, update plots 
 
+
 function optionChanged(sampleID) {
     buildPlot(sampleID);
-    // buildTable(sampleID);
+    buildTable(sampleID);
+    // buildGauge(sampleID);
 };
+
 
 function init() {
     var selector = d3.select('#selDataset');
@@ -23,10 +26,12 @@ function init() {
     });
 
     buildPlot("940");
-    buildTable("940"); s
+    buildTable("940");
+    buildGauge("940");
 }
 
 init();
+
 
 function buildPlot(selectedID) {
     // pull in the data
@@ -83,7 +88,7 @@ function buildPlot(selectedID) {
 function buildTable(selectedID) {
     // pull the data
     d3.json("../samples.json").then(function (data) {
-        console.log(data);
+
 
         var metadata_info = data.metadata.filter(metadata => metadata.id.toString() === selectedID)[0];
         //as stated in comments above, metadata was not pulling correctly as integer, converting toString..
@@ -106,14 +111,44 @@ function buildTable(selectedID) {
 
 
 function buildGauge(selectedID) {
+    // pull the data
+    d3.json("../samples.json").then(function (data) {
+
+        // now I want to drill down to the belly button washing frequency data for easy selected ID
+        // within the buildTable function, I'd already called metadata_info
+        // so, metadata_info.wfreq should pull the data desired for the selected ID
+        // I can use this same procedure to drill down into wfreq
+
+        var wash_freq_proc = data.metadata.filter(metadata => metadata.id.toString() === selectedID)[0];
+        var wash_freq = wash_freq_proc.wfreq;
+        console.log(wash_freq);
+        // this {console.log(wash_freq);} is showing me that the correct data point is being called,
+        // but only for the init() function.
+
+
+        // https://plotly.com/javascript/gauge-charts/
+        // pulling in the plot.ly gauge charting package:
+
+        var gauge = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: 270,
+                title: { text: "Speed" },
+                type: "indicator",
+                mode: "gauge+number"
+            }
+        ];
+
+        var layout_gauge = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+
+        Plotly.newPlot('myDiv', gauge, layout_gauge);
 
 
 
+
+
+    });
 }
-
-}
-
-
 
 
 
@@ -165,5 +200,4 @@ function buildGauge(selectedID) {
 
 
 // d3.json("../samples.json").then(function (data) {
-//     var metadata_ID = data.metadata.[''].id
-
+//     var metadata_ID = data.metadata.[''].id }
