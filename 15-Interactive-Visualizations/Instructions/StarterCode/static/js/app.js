@@ -63,7 +63,7 @@ function buildPlot(selectedID) {
         // the below chart is not pulling the OTU_IDs correctly: 
         // it's showing the 10 OTU_ID's pulled in a long range of the values.
         // instead trying: 
-        var top_otu_labels = data.samples[0].otu_ids.slice(0, 9).map(row => 'OTU' + row)
+        var top_otu_labels = data.samples[0].otu_ids.slice(0, 10).map(row => 'OTU' + row)
         console.log(top_otu_labels)
 
         // Example 15-3-5 shows that I need to reverse() these slices due to plot.loy defaults
@@ -73,7 +73,7 @@ function buildPlot(selectedID) {
             {
                 // y: sample.otu_ids.map(d => d.toString()).slice(0, 9),
                 y: top_otu_labels,
-                x: sample.sample_values.slice(0, 9).reverse(),
+                x: sample.sample_values.slice(0, 10).reverse(),
                 type: 'bar',
                 orientation: 'h'
             }
@@ -92,13 +92,16 @@ function buildPlot(selectedID) {
         // pulling in the plot.ly bubble chart package: https://plotly.com/javascript/bubble-charts/
 
         var bubble_data = {
-            x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
-            y: sample.sample_values.slice(0, 9),
+
+            // x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
+            x: top_otu_labels,
+            y: sample.sample_values.slice(0, 10),
             mode: 'markers',
             marker: {
                 // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
                 // opacity: [1, 0.8, 0.6, 0.4],
-                size: sample.sample_values.slice(0, 9)
+                size: sample.sample_values.slice(0, 10)
+
             }
         };
 
