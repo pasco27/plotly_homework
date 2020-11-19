@@ -63,16 +63,17 @@ function buildPlot(selectedID) {
         // the below chart is not pulling the OTU_IDs correctly: 
         // it's showing the 10 OTU_ID's pulled in a long range of the values.
         // instead trying: 
-        // var labels = data.sample
+        var top_otu_labels = data.samples[0].otu_ids.slice(0, 9).map(row => 'OTU' + row)
+        console.log(top_otu_labels)
 
         // Example 15-3-5 shows that I need to reverse() these slices due to plot.loy defaults
         // It doesn't seem that I do, but I'm keeping this note in the instance that I need to in the future
 
-
         var chart_data = [
             {
-                y: sample.otu_ids.map(d => d.toString()).slice(0, 9),
-                x: sample.sample_values.slice(0, 9),
+                // y: sample.otu_ids.map(d => d.toString()).slice(0, 9),
+                y: top_otu_labels,
+                x: sample.sample_values.slice(0, 9).reverse(),
                 type: 'bar',
                 orientation: 'h'
             }
@@ -81,27 +82,28 @@ function buildPlot(selectedID) {
         var layout_chart = {
             title: "The Top 10 OTU's",
             xaxis: { title: "Count" },
-            yaxis: { title: "OTU ID" }
+            // yaxis: { title: "OTU ID" }
         };
 
         Plotly.newPlot("bar-plot", chart_data, layout_chart);
 
 
+        // to display similar data utilizing the bubble chart format, 
+        // pulling in the plot.ly bubble chart package: https://plotly.com/javascript/bubble-charts/
 
-        // to display similar data utilizing the bubble chart format: 
         var bubble_data = {
-            x: [1, 2, 3, 4],
-            y: [10, 11, 12, 13],
+            x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
+            y: sample.sample_values.slice(0, 9),
             mode: 'markers',
             marker: {
-                color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-                opacity: [1, 0.8, 0.6, 0.4],
-                size: [40, 60, 80, 100]
+                // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                // opacity: [1, 0.8, 0.6, 0.4],
+                size: sample.sample_values.slice(0, 9)
             }
         };
 
         var layout_gauge = {
-            title: 'Marker Size and Color',
+            title: "Marker Size and Color",
             showlegend: false,
             height: 600,
             width: 600
@@ -138,6 +140,8 @@ function buildTable(selectedID) {
 }
 
 
+
+
 function buildGauge(selectedID) {
     // pull the data
     d3.json("../samples.json").then(function (data) {
@@ -154,33 +158,51 @@ function buildGauge(selectedID) {
         // but only for the init() function.
 
 
-        // https://plotly.com/javascript/gauge-charts/
-        // pulling in the plot.ly gauge charting package:
+        // pulling in the plot.ly gauge charting package: https://plotly.com/javascript/gauge-charts/
 
         var gauge = [
             {
-                domain: { x: [0, 1], y: [0, 1] },
-                value: wash_freq,
-                title: { text: "Washing Frequency per Week" },
                 type: "indicator",
-                mode: "gauge+number"
+                mode: "gauge+number+delta",
+                value: wash_freq,
+                title: { text: "Scrubs per Week", font: { size: 18 } },
+                // delta: { reference: 400, increasing: { color: "RebeccaPurple" } },
+                gauge: {
+                    axis: { range: [null, 10], tickwidth: 1, tickcolor: "darkblue" },
+                    bar: { color: "darkblue" },
+                    bgcolor: "white",
+                    borderwidth: 2,
+                    bordercolor: "gray",
+                    steps: [
+                        { range: [0, 2], color: "white" },
+                        { range: [2, 5], color: "cyan" },
+                        { range: [5, 8], color: "royalblue" },
+                        { range: [8, 10], color: "darkblue" },
+                    ],
+                    // threshold: {
+                    //     line: { color: "red", width: 4 },
+                    //     thickness: 0.75,
+                    //     value: 5
+                    // }
+                }
             }
         ];
 
-        var layout_gauge = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+        var layout_gauge = {
+            width: 400,
+            height: 300,
+            margin: { t: 25, r: 25, l: 25, b: 25 },
+            paper_bgcolor: "lavender",
+            font: { color: "darkblue", family: "Arial" }
+        };
+
+        var layout_gauge = { width: 500, height: 400, margin: { t: 0, b: 0 } };
 
         Plotly.newPlot("gauge", gauge, layout_gauge);
 
 
-
-
-
     });
 }
-
-
-
-
 
 
 
