@@ -1,8 +1,11 @@
 
 github pages link: https://pasco27.github.io/plotly_homework/ </br>
 Grader: The readme here has uploaded the class repo documents, as I linked to the incorrect folder level. </br>
-Please dig into the Unit 15 folder to see my code and contributions to this assignment.
-(final_site_pascarella.png)
+Please dig into the Unit 15 folder to see my code and contributions to this assignment. </br>
+(final_site_pascarella.png) </br>
+(final_site_pascarella.png) <- final page, added last minute rubric items including bubble plot colors and text.
+
+
 
 
 
