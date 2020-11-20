@@ -10,7 +10,7 @@
 function optionChanged(sampleID) {
     buildPlot(sampleID);
     buildTable(sampleID);
-    // buildGauge(sampleID);
+    buildGauge(sampleID);
 };
 
 
@@ -36,7 +36,7 @@ init();
 function buildPlot(selectedID) {
     // pull in the data
     d3.json("../samples.json").then(function (data) {
-        console.log(data);
+        console.log("buildPlot", data);
         // so I see we have names, metadata, and samples...
 
         // pull in and parse data: looks like there are 153 ID's, each with the own list of OTU_ID's 
@@ -50,7 +50,7 @@ function buildPlot(selectedID) {
         // this line is the first return array that matches in the sample...
 
         var sample = data.samples.filter(sample => sample.id === selectedID)[0];
-        console.log(sample);
+        console.log("buildPlot", sample);
 
         // so now, "sample" in line 47 gives me the dataset for that sample id number
         // which includes otu_labels, otu_ids, and the sample_values 
@@ -64,7 +64,7 @@ function buildPlot(selectedID) {
         // it's showing the 10 OTU_ID's pulled in a long range of the values.
         // instead trying: 
         var top_otu_labels = data.samples[0].otu_ids.slice(0, 10).map(row => 'OTU' + row)
-        console.log(top_otu_labels)
+        console.log("buildPlot", top_otu_labels)
 
         // Example 15-3-5 shows that I need to reverse() these slices due to plot.loy defaults
         // It doesn't seem that I do, but I'm keeping this note in the instance that I need to in the future
@@ -91,25 +91,28 @@ function buildPlot(selectedID) {
         // to display similar data utilizing the bubble chart format, 
         // pulling in the plot.ly bubble chart package: https://plotly.com/javascript/bubble-charts/
 
-        var bubble_data = {
-
-            // x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
-            x: sample.otu_ids,
-            y: sample.sample_values,  // <-- removing the slice
-            mode: "markers",
-            marker: {
-                // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-                // opacity: [1, 0.8, 0.6, 0.4],
-                size: sample.sample_values
-
+        var bubble_data = [
+            {
+                // x: sample.otu_ids.map(d => d.toString()).slice(0, 9),
+                x: sample.otu_ids,
+                y: sample.sample_values,  // <-- removing the slice
+                mode: "markers",
+                marker: {
+                    // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                    opacity: [1, 0.8, 0.6, 0.4],
+                    size: sample.sample_values
+                }
             }
-        };
+        ];
+        // installed the two spaces into this for troubleshooting of 'bubble data'
+        console.log("\n \nbubble data", bubble_data);
+
 
         var layout_bubble = {
-            title: "Bubble Shit",
+            title: " ",
             showlegend: false,
             height: 600,
-            width: 800
+            width: 1200
         };
 
         Plotly.newPlot("bubble", bubble_data, layout_bubble);
