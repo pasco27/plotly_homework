@@ -97,8 +97,9 @@ function buildPlot(selectedID) {
                 x: sample.otu_ids,
                 y: sample.sample_values,  // <-- removing the slice
                 mode: "markers",
+                text: sample.otu_ids,
                 marker: {
-                    // color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)', 'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                    color: sample.otu_ids,
                     opacity: [1, 0.8, 0.6, 0.4],
                     size: sample.sample_values
                 }
