@@ -1,6 +1,7 @@
 
-github pages link: https://pasco27.github.io/plotly_homework/
-Grader: The readme here has uploaded the class repo documents, as I linked to the incorrect folder level. 
+github pages link: https://pasco27.github.io/plotly_homework/ </br>
+Grader: The readme here has uploaded the class repo documents, as I linked to the incorrect folder level. </br>
+Please dig into the Unit 15 folder to see my code and contributions to this assignment.
 
 
 
