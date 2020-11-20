@@ -109,7 +109,8 @@ function buildPlot(selectedID) {
 
 
         var layout_bubble = {
-            title: " ",
+            title: "OTU Bubbles",
+            xaxis: { title: "OTU ID" },
             showlegend: false,
             height: 600,
             width: 1200
