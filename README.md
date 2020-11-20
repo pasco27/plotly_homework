@@ -1,5 +1,8 @@
 
 github pages link: https://pasco27.github.io/plotly_homework/
+Grader: The readme here has uploaded the class repo documents, as I linked to the incorrect folder level. 
+
+
 
 
 # Plot.ly Homework - Belly Button Biodiversity
